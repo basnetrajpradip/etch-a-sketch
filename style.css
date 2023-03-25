@@ -5,28 +5,44 @@ body{
     max-height: 100vh;
 }
 
-.grids{
-    border: 1px solid black;
-    height: 40px;
-    width: 40px;
+.container{
+    margin-top: 100px;
+    margin-left: 620px;
 }
 
-.container{
-    margin-top: 15vh;
+.sketch-container{
     display: flex;
     justify-content: center;
+    border: 1px solid black;
+    height: 70vh;
+    width: 75vh;
 }
 
-.bg-color {
-    background-color: red;
-}
 
 .grid-size{
     display: flex;
     justify-content: center;
+    margin-top: 20px;
 }
 
-p{
+
+
+.size-output{
     display: flex;
     justify-content: center;
+}
+
+.columns{
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+}
+
+.grids{
+    border: 1px solid black;
+    flex: 1 0 0;
+}
+
+.change-color{
+    background-color: red;
 }

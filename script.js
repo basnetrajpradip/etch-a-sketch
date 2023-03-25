@@ -1,33 +1,61 @@
-const container = document.querySelector(".container");
-const rows = [];
-const grids = [];
+const sketchContainer = document.querySelector(".sketch-container");
 const slider = document.querySelector(".slider");
-const value = document.querySelector(".size-value");
-let num = slider.value;
-value.textContent = slider.value;
+const sizeValue = document.querySelector(".size-value");
+let size = slider.value;
+sizeValue.textContent = ` ${size} x ${size} `;
+const columns = [];
+const grids = [];
 
-for (let i = 0; i < num; i++) {
-  rows[i] = document.createElement("div");
-  rows[i].classList.add(`row`);
-  container.appendChild(rows[i]);
+//displays the change in size value and updates the size value
+function getSize(event) {
+  size = slider.value;
+  sizeValue.textContent = ` ${size} x ${size} `;
 }
 
-for (let i = 0; i < num; i++) {
-  for (let j = 0; j < num; j++) {
-    grids[i] = document.createElement("div");
-    grids[i].classList.add("grids");
-    rows[i].appendChild(grids[i]);
+//creates the grid inside the container of given size
+function createGrid(size) {
+  for (let i = 0; i < size; i++) {
+    columns[i] = document.createElement("div");
+    columns[i].classList.add(`column${i}`);
+    columns[i].classList.add("columns");
+    sketchContainer.appendChild(columns[i]);
+  }
+
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      grids[j] = document.createElement("div");
+      grids[j].classList.add("grids");
+      columns[i].append(grids[j]);
+    }
   }
 }
 
-slider.addEventListener("input", (e) => {
-  value.textContent = slider.value;
-  num = slider.value;
-});
+//removes the existing grid by removing sketch container's nodes if exists
+function removeGrid() {
+  while (sketchContainer.childNodes.length > 0) {
+    sketchContainer.removeChild(sketchContainer.firstElementChild);
+  }
+}
 
-const grid = document.querySelectorAll(".grids");
-grid.forEach((item) => {
-  item.addEventListener("mouseover", (e) => {
-    item.classList.add("bg-color");
+//Changes the grid size by removing the existing grids and creating new grid of given size
+function changeGrid(event) {
+  removeGrid();
+  createGrid(size);
+  let grid = document.querySelectorAll(".grids");
+  grid.forEach(colorGrid);
+}
+
+function colorGrid(item) {
+  item.addEventListener("mouseover", (event) => {
+    item.classList.add("change-color");
   });
-});
+}
+
+//creates the default grid of default size
+createGrid(size);
+
+slider.addEventListener("mouseup", getSize);
+slider.addEventListener("mouseup", changeGrid);
+
+let grid = document.querySelectorAll(".grids");
+grid.forEach(colorGrid);
